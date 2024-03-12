@@ -1,15 +1,43 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
-import { setSelectedCountry } from "../redux/fetchCountries";
+import { getItems, handleKeyword, setSelectedItem } from "../redux/searchItemSlice";
 
-const CountriesDropdown = () => {
+function SearchItems() {
 
     const dispatch = useDispatch()
-    const datas = useSelector(state => state.countries)
-    
-    const countries = datas?.countries
-    const selectedCountry = datas?.selectedCountry
+    const [keyword, setKeyword] = useState('');
+    const [loading, setLoading] = useState(false);
+
+
+
+    const handleInputChange = (newValue) => {
+        setKeyword(newValue);
+        if (newValue.trim() === '') {
+          setKeyword('');
+          setLoading(false);
+          // Eğer gerekirse aksiyonlar burada dispatch edilmeyebilir.
+        } else {
+          setKeyword(newValue);
+          setLoading(true);
+          dispatch(handleKeyword(newValue));
+          dispatch(getItems());
+        }
+      };
+
+    const items = useSelector(state => state.searchingItems)
+
+    useEffect(() => {
+
+        setLoading(false);
+      
+    }, [items]);
+
+
+    const handleDropdownChanges = (selectedOption) => {
+      const commodityID = selectedOption.value
+
+    }
 
 
     const customStyles = { //=> for dropdown menu customize
@@ -49,27 +77,26 @@ const CountriesDropdown = () => {
             
         }),
           dropdownIndicator: (provided, state) => ({
-            display: 'flex',
+            display: 'none',
             alignItems: 'center',
             justifyContent: 'center',
             marginRight : "6px",
           }),
       };
 
-      return (
-      <div className="w-full flex flex-col">
-
-            <div className="mb-1 font-gabarito flex justify-start items-center">Shipment origin</div>
+    return (
+        <div className="w-full">
             <Select
-                options={countries}
+                inputValue={keyword}
+                onInputChange={handleInputChange}
+                onChange={(selectedOption) => setSelectedItem(selectedOption)}
+                isLoading={loading}
+                options={items.items}
+                placeholder="search..."
                 styles={customStyles}
-                isSearchable
-                onChange={(selectedOption) => dispatch(setSelectedCountry(selectedOption))}
-                value={selectedCountry}
             />
-      </div>
-      )
-
+        </div>
+    )
 }
 
-export default CountriesDropdown
+export default SearchItems

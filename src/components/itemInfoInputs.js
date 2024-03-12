@@ -7,7 +7,7 @@ const ItemInfos = () => {
 
     const dispatch = useDispatch()
     const datas = useSelector(state => state.itemInfos)
-    console.log(datas)
+
     const parsingFunction = (event , field) => {
 
         const filteredValue = event.replace(/[^0-9,.]/g, "");

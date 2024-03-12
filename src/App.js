@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { getCountries } from "./redux/fetchCountries";
 import CountriesDropdown from "./components/countriesDropdown";
 import ItemInfos from "./components/itemInfoInputs";
+import SearchItems from "./components/searchItems";
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
             <div className="mt-4 mb-4">
               <div className="flex justify-center items-center w-full"><CountriesDropdown/></div>
               <div className="flex justify-center items-center mt-8 w-full"><ItemInfos/></div>
+              <div className="flex justify-center items-center mt-8 w-full"><SearchItems/></div>
             </div>
 
         </div>
