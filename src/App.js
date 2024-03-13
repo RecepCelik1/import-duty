@@ -17,7 +17,7 @@ function App() {
 
 
   return (
-    <div className="h-full min-h-screen w-full bg-gray-800 flex justify-center items-center">
+    <div className="h-full min-h-screen w-full bg-gray-800 flex justify-center items-center p-4">
         <div className="bg-white w-96 p-8 flex flex-col rounded-2xl"> {/* main container */}
 
             <div className="mt-4 mb-4">
