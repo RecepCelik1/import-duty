@@ -1,28 +1,25 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
-import { getItems, handleKeyword, setSelectedItem } from "../redux/searchItemSlice";
+import { getItems, handleKeyword } from "../redux/searchItemSlice";
+import { getItemProperties, setCommodityID } from "../redux/getItemStats";
+
 
 function SearchItems() {
 
     const dispatch = useDispatch()
-    const [keyword, setKeyword] = useState('');
     const [loading, setLoading] = useState(false);
-
+    //const getOptionValue = (option) => option.i;
 
 
     const handleInputChange = (newValue) => {
-        setKeyword(newValue);
-        if (newValue.trim() === '') {
-          setKeyword('');
-          setLoading(false);
-          // Eğer gerekirse aksiyonlar burada dispatch edilmeyebilir.
-        } else {
-          setKeyword(newValue);
+ 
+
           setLoading(true);
+
           dispatch(handleKeyword(newValue));
           dispatch(getItems());
-        }
+        
       };
 
     const items = useSelector(state => state.searchingItems)
@@ -35,10 +32,11 @@ function SearchItems() {
 
 
     const handleDropdownChanges = (selectedOption) => {
-      const commodityID = selectedOption.value
-
+      let commodityID = selectedOption.value
+      commodityID = parseFloat(commodityID)
+      dispatch(setCommodityID(commodityID))      
+      dispatch(getItemProperties())
     }
-
 
     const customStyles = { //=> for dropdown menu customize
         option: (provided, state) => ({
@@ -87,9 +85,8 @@ function SearchItems() {
     return (
         <div className="w-full">
             <Select
-                inputValue={keyword}
                 onInputChange={handleInputChange}
-                onChange={(selectedOption) => setSelectedItem(selectedOption)}
+                onChange={(selectedOption) => handleDropdownChanges(selectedOption)}
                 isLoading={loading}
                 options={items.items}
                 placeholder="search..."

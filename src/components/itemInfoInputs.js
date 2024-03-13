@@ -74,7 +74,7 @@ const ItemInfos = () => {
                     <div className="mb-1 font-gabarito flex justify-start items-center">Item selling price</div>
                     <div className="relative">
                         <input 
-                            className="h-12 p-2 rounded-[5px] w-full"
+                            className="h-12 p-2 rounded-[5px] w-full border-2 border-gray-300"
                             onChange={(e) => parsingFunction(e.target.value , "itemSellingPrice")}
                         />
 
@@ -88,7 +88,7 @@ const ItemInfos = () => {
                     <div className="mb-1 font-gabarito flex justify-start items-center">Shipping / Insurance (messages.optional)</div>
                     <div className="relative">
                         <input 
-                            className="h-12 p-2 rounded-[5px] w-full"
+                            className="h-12 p-2 rounded-[5px] w-full border-2 border-gray-300"
                             onChange={(e) => parsingFunction(e.target.value , "shippingCharge")}
                         />
 
